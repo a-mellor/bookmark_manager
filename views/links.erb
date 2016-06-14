@@ -1,6 +1,10 @@
-<ul id="links">
-Makers Academy
-</ul>
+<h1> Links </h1>
 
-<ul id="lnks">
+<ul id='links'>
+  <% @links.each do |link| %>
+    <li>
+      Title: <%= link.title %>
+      URL:   <%= link.url   %>
+    </li>
+  <% end %>
 </ul>
