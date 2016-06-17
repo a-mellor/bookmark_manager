@@ -24,7 +24,6 @@ class Bookmarks < Sinatra::Base
     erb :'links/new_link'
   end
 
-
   post '/links' do
     link = Link.create(url: params[:url], title: params[:title]) #create a link
     params[:tags].split.each do |tag| #split the tags
@@ -55,6 +54,21 @@ class Bookmarks < Sinatra::Base
     else
       flash.now[:errors] = user.errors.full_messages
       erb :'users/new'
+    end
+  end
+
+  get '/users/signin' do
+    erb :'users/sign_in'
+  end
+
+  post '/users/signin' do
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect to '/links'
+    else
+      flash.now[:errors] = ["The email or password is incorrect."]
+      erb :'users/signin'
     end
   end
 
